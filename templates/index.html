@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>飲料點單</title>
+</head>
+<body>
+  <h2>輸入飲料名稱</h2>
+  <input type="text" id="drink" placeholder="例如：珍珠奶茶"><br><br>
+
+  <h2>甜度</h2>
+  <select id="sweetness">
+    <option>全糖</option>
+    <option>7分糖</option>
+    <option>5分糖</option>
+    <option>3分糖</option>
+    <option>無糖</option>
+  </select><br><br>
+
+  <h2>冰塊</h2>
+  <select id="ice">
+    <option>熱</option>
+    <option>冰</option>
+    <option>少冰</option>
+    <option>微冰</option>
+    <option>去冰</option>
+  </select><br><br>
+
+  <h2>杯數</h2>
+  <select id="qty">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
+  </select><br><br>
+
+  <button onclick="submitOrder()">確認</button>
+
+  <script>
+    function submitOrder() {
+      const drink = document.getElementById("drink").value;
+      const sweetness = document.getElementById("sweetness").value;
+      const ice = document.getElementById("ice").value;
+      const qty = document.getElementById("qty").value;
+
+      // 傳送資料到 Flask 後端 /submit
+      fetch("/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ drink, sweetness, ice, qty })
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("訂單已送出！");
+        } else {
+          alert("送出失敗！");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

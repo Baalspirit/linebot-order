@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: linebot-order
+    env: python
+    buildCommand: ""
+    startCommand: python app.py
+    envVars:
+      - key: GOOGLE_SHEET_KEYFILE
+        value: drink-bot.json
